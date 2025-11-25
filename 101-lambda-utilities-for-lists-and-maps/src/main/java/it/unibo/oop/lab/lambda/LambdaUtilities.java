@@ -14,9 +14,6 @@ import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static java.util.Collections.emptyList;
-import static java.util.Collections.emptyMap;
-
 /**
  * This class will contain four utility functions on lists and maps, of which the first one is provided as example.
  * <br>
@@ -88,7 +85,7 @@ public final class LambdaUtilities {
         /*
          * Suggestion: consider Map.merge
          */
-        final Map <R, Set<T>> map = new HashMap<>();
+        final Map<R, Set<T>> map = new HashMap<>();
         list.forEach(o -> {
             final R key = op.apply(o);
             final Set<T> set = new HashSet<>();
@@ -98,7 +95,6 @@ public final class LambdaUtilities {
                 return oldSet;
             });
         }); 
-
         return map;
     }
 
@@ -120,7 +116,11 @@ public final class LambdaUtilities {
          *
          * Keep in mind that a map can be iterated through its forEach method
          */
-        return emptyMap();
+        final Map<K, V> resultMap = new HashMap<>();
+        map.forEach((k, v) -> {
+            resultMap.put(k, v.orElse(def.get()));
+        });
+        return resultMap;
     }
 
     /**
